@@ -62,6 +62,7 @@ public class masterFighter extends PollingScript<ClientContext>{
         currlevel = cb_total();
         last_time = System.currentTimeMillis();
         last_exp = exp_total();
+        ctx.input.speed(1);
     }
 
     @Override
@@ -69,9 +70,8 @@ public class masterFighter extends PollingScript<ClientContext>{
         if (ranging) fc();
         else close_combat();
         random_mouse(12);
-        maintain();
+        if (random(0, 2000) == 1) overcome_levelup_stump();
         wait(random(200, 900));
-        ctx.input.speed(random(71, 100));
     }
 
     private void random_mouse(int freq){
@@ -104,6 +104,10 @@ public class masterFighter extends PollingScript<ClientContext>{
     private void fc(){
         fight_range();
         relocate();
+        fight_range();
+        relocate();
+        fight_range();
+        relocate();
         eat();
         relocate_to_start(150);
         random_activity(120);
@@ -111,10 +115,13 @@ public class masterFighter extends PollingScript<ClientContext>{
 
 
     public void close_combat(){
+        fight();fight();
         fight();
         eat();
+        fight();fight();
         fight();
         random_activity(100);
+        fight();fight();
         fight();
     }
 
@@ -184,7 +191,6 @@ public class masterFighter extends PollingScript<ClientContext>{
     }
 
     private void overcome_levelup_stump(){
-        if (random(0, 10000) != 1) return;
         if (ctx.players.local().inMotion()) return;
         if (ctx.npcs.select(new Filter<Npc>() {
             @Override
