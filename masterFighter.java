@@ -184,6 +184,7 @@ public class masterFighter extends PollingScript<ClientContext>{
     }
 
     private void overcome_levelup_stump(){
+        if (random(0, 10000) != 1) return;
         if (ctx.players.local().inMotion()) return;
         if (ctx.npcs.select(new Filter<Npc>() {
             @Override
